@@ -220,6 +220,85 @@ If budget exceeded → policy violation logged → compression agent triggered a
 
 ---
 
+---
+
+## Troubleshooting
+
+**Docker not starting?**
+- Make sure Docker Desktop is open and whale icon is in taskbar
+- Run `docker-compose down -v` then `docker-compose up --build`
+
+**Database error?**
+- Make sure POSTGRES_USER=postgres in .env
+- Run `docker-compose down -v` to reset database volume
+
+**Groq API error?**
+- Check your GROQ_API_KEY is correct in .env and docker-compose.yml
+- Free tier has rate limits — wait 60 seconds between requests
+
+**Port 8000 already in use?**
+- Stop other services using port 8000
+- Or change port in docker-compose.yml from 8000:8000 to 8001:8000
+
+---
+
+## Example API Responses
+
+**POST /api/query**
+```json
+{
+  "event": "job_started",
+  "job_id": "df53dae5-868c-4a94-946e-2c1ab96b1d8a",
+  "agent": "orchestrator"
+}
+{
+  "event": "agent_start",
+  "agent": "decomposition_agent",
+  "context_budget_remaining": 8000
+}
+{
+  "event": "job_complete",
+  "job_id": "df53dae5-868c-4a94-946e-2c1ab96b1d8a",
+  "final_answer": "Machine learning is a subset of AI..."
+}
+```
+
+**GET /api/job/{job_id}/trace**
+```json
+{
+  "job_id": "df53dae5-868c-4a94-946e-2c1ab96b1d8a",
+  "query": "What is machine learning?",
+  "status": "completed",
+  "execution_trace": [
+    {
+      "type": "agent_action",
+      "agent_id": "decomposition_agent",
+      "event_type": "decomposition_complete",
+      "latency_ms": 834.2,
+      "token_count": 120
+    }
+  ]
+}
+```
+
+**GET /api/eval/latest**
+```json
+{
+  "overall_average": 0.78,
+  "by_category": {
+    "straightforward": 0.88,
+    "ambiguous": 0.72,
+    "adversarial": 0.65
+  },
+  "by_dimension": {
+    "correctness": 0.82,
+    "citation_accuracy": 0.76,
+    "contradiction_resolution": 0.80
+  }
+}
+
+---
+
 ## AI Collaboration
 
 Built with AI assistance from Claude by Anthropic. All code reviewed and tested before submission. AI used for code generation, architecture decisions, and debugging. Every component verified end to end.
