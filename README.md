@@ -248,6 +248,3 @@ GET /api/eval/latest response:
 
 ---
 
-## AI Collaboration
-
-Built with AI assistance from Claude by Anthropic. All code reviewed and tested before submission. AI used for code generation, architecture decisions, and debugging. Every component verified end to end.
