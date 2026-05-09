@@ -1,0 +1,62 @@
+{
+  "eval_run_sample": {
+    "timestamp": "2026-04-30T11:00:00Z",
+    "total_tests": 15,
+    "overall_average": 0.78,
+    "by_category": {
+      "straightforward": {
+        "average_score": 0.88,
+        "test_count": 5,
+        "all_scores": [0.92, 0.85, 0.90, 0.87, 0.86]
+      },
+      "ambiguous": {
+        "average_score": 0.72,
+        "test_count": 5,
+        "all_scores": [0.75, 0.68, 0.70, 0.74, 0.73]
+      },
+      "adversarial": {
+        "average_score": 0.65,
+        "test_count": 5,
+        "all_scores": [0.60, 0.70, 0.62, 0.68, 0.65]
+      }
+    },
+    "by_dimension": {
+      "correctness": {
+        "score": 0.82,
+        "weight": 0.30,
+        "justification": "Strong on straightforward, weaker on adversarial false premises"
+      },
+      "citation_accuracy": {
+        "score": 0.72,
+        "weight": 0.20,
+        "justification": "Provenance maps present but weaker on ambiguous queries"
+      },
+      "contradiction_resolution": {
+        "score": 0.82,
+        "weight": 0.15,
+        "justification": "Critique-synthesis loop resolves most flagged issues"
+      },
+      "tool_efficiency": {
+        "score": 0.85,
+        "weight": 0.15,
+        "justification": "Most tool calls justified, minor over-calling on simple queries"
+      },
+      "budget_compliance": {
+        "score": 0.92,
+        "weight": 0.10,
+        "justification": "Context manager enforces limits, compression triggers correctly"
+      },
+      "critique_agreement": {
+        "score": 0.80,
+        "weight": 0.10,
+        "justification": "High agreement on straightforward, lower on adversarial"
+      }
+    },
+    "failed_tests": ["tc_011", "tc_013"],
+    "improvement_suggestions": {
+      "worst_dimension": "citation_accuracy",
+      "responsible_agent": "retrieval_agent",
+      "proposed_fix": "Add vector database for semantic chunk retrieval"
+    }
+  }
+}
